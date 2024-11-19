@@ -13,5 +13,5 @@ server.use(express.urlencoded({ extended: true }));
 server.use('/', router);
 
 server.listen(process.env.PORT || 3000, () => {
-    console.log(`🚀 Server is running on port ${process.env.BASE_URL}`);
+    console.log(`🚀 Server is running on ${process.env.BASE_URL}`);
 });

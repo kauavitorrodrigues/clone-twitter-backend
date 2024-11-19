@@ -12,3 +12,48 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  slug     String      @id
+  email    String      @unique
+  password String
+  name     String
+  avatar   String      @default("default.jpg")
+  cover    String      @default("default.jpg")
+  bio      String?
+  link     String?
+  tweets   Tweet[]
+  likes    TweetLike[]
+}
+
+model Tweet {
+  id        Int         @id @default(autoincrement())
+  userSlug  String
+  body      String
+  image     String?
+  createdAt DateTime    @default(now())
+  answerOf  Int         @default(0)
+  user      User        @relation(fields: [userSlug], references: [slug])
+  likes     TweetLike[]
+}
+
+model TweetLike {
+  id       Int    @id @default(autoincrement())
+  userSlug String
+  tweetId  Int
+  user     User   @relation(fields: [userSlug], references: [slug])
+  tweet    Tweet  @relation(fields: [tweetId], references: [id])
+}
+
+model Follow {
+  id        Int    @id @default(autoincrement())
+  user1Slug String
+  user2Slug String
+}
+
+model Trend {
+  id        Int      @id @default(autoincrement())
+  hashtag   String
+  counter   Int      @default(1)
+  updatedAt DateTime @default(now())
+}
