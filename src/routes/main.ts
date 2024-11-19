@@ -1,5 +1,8 @@
-import { Router } from 'express';
+import express from "express"
+import { router as pingRouter } from "./ping"
 
-const router = Router();
+const router = express.Router()
 
-export default router;
+router.use("/ping", pingRouter)
+
+export default router
